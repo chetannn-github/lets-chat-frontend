@@ -1,6 +1,7 @@
 
 import { useDispatch } from 'react-redux'
 import { removeLoggedInUser } from '../redux/userSlice';
+import toast from 'react-hot-toast';
 
 const useLogout = async(dispatch) => {
  
@@ -16,15 +17,18 @@ try{
 
     const data = await res.json();
     console.log(data);
-   
+    if(data.error){
+      throw new Error (data.error)
+    }
 
   }catch(err){
-    console.log(err.message)
+    toast.error(err.message)
   }
 
 
 
 dispatch(removeLoggedInUser());
+localStorage.removeItem("loggedInUser")
 }
 
 export default useLogout

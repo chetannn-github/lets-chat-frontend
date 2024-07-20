@@ -1,6 +1,6 @@
+import { pushMsg } from "../redux/msgSlice";
 
-
-const useSendMsg =async (message,recieverId) => {
+const useSendMsg =async (dispatch ,message,recieverId) => {
     
   
   
@@ -15,6 +15,7 @@ const useSendMsg =async (message,recieverId) => {
   
       const data = await res.json();
       console.log(data)
+      dispatch(pushMsg(data))
     }catch(err){
       console.log(err.message)
     }

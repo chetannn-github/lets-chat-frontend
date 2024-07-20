@@ -6,7 +6,8 @@ const userSlice = createSlice ({
     initialState:{
         loggedInUser:null,
         otherUsers:null,
-        selectedFriend:null
+        selectedFriend:null,
+        onlineUsers:null
     },
     reducers:{
         addLoggedInUser :(state,action) =>{
@@ -23,9 +24,12 @@ const userSlice = createSlice ({
         },
         addSelectedFriend:(state,action) =>{
             state.selectedFriend = action.payload
+        },
+        addOnlineUser:(state,action) =>{
+            state.onlineUsers = action.payload;
         }
     }
 });
 
 export default userSlice.reducer;
-export const {addLoggedInUser,removeLoggedInUser,addOtherUsers,removeOtherUsers, addSelectedFriend} = userSlice.actions;
+export const {addLoggedInUser,removeLoggedInUser,addOtherUsers,removeOtherUsers, addSelectedFriend,addOnlineUser} = userSlice.actions;

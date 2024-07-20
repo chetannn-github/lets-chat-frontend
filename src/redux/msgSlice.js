@@ -11,6 +11,9 @@ const msgSlice = createSlice ({
         addMsgs :(state,action) =>{
                 state.msgs = action.payload;
         },
+        pushMsg:(state,action) =>{
+                state.msgs.push(action.payload)
+        },
         removeMsgs :(state,action) =>{
         state.msgs = [];
         },
@@ -19,4 +22,4 @@ const msgSlice = createSlice ({
 });
 
 export default msgSlice.reducer;
-export const {addMsgs,removeMsgs} = msgSlice.actions;
+export const {addMsgs,removeMsgs,pushMsg} = msgSlice.actions;

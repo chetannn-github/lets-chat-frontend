@@ -1,6 +1,6 @@
 
 import { addLoggedInUser } from "../redux/userSlice";
-
+import toast from 'react-hot-toast';
 
 const useLogin = async(dispatch,userName, password) => {
   console.log(userName,password)
@@ -16,11 +16,18 @@ const useLogin = async(dispatch,userName, password) => {
     });
 
     const data = await res.json();
+
+    if(data.error){
+      throw new Error (data.error)
+    }
+
     console.log(data);
-    dispatch( addLoggedInUser(data))
+    dispatch(addLoggedInUser(data));
+    localStorage.setItem("loggedInUser",JSON.stringify(data))
 
   }catch(err){
     console.log(err.message)
+      toast.error(err.message)
   }
 
 }

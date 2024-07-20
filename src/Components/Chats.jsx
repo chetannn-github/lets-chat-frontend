@@ -1,20 +1,47 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import {Send} from "lucide-react"
-import {useSelector} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import useSendMsg from "../customhooks/useSendMsg"
+import socketClient from "socket.io-client";
+import io from 'socket.io-client';
+
+
 
 export const Chats = () => {
+  
+
+
+  let dispatch = useDispatch();
   let msgs = useSelector((store)=>(store.msg.msgs));
-  let me = useSelector((store)=>{store.user.loggedInUser._id})
+  // let me = useSelector((store)=>(store.user.loggedInUser))
+  let me = localStorage.getItem('loggedInUser');
+  if(me){me= JSON.parse(me)}
+
+  // console.log(me)
   let selectedFriend = useSelector((store)=>(store.user.selectedFriend))
   let sendMsg = useRef();
 
+  // console.log(typeof(me))
   let handleSendMsg = () =>{
-      useSendMsg(sendMsg.current.value,selectedFriend._id)
+      useSendMsg(dispatch,sendMsg.current.value,selectedFriend._id);
+      sendMsg.current.value = ''; 
+  }
+
+  let handleEnter = (e) => {
+    if (e.key === 'Enter') {
+      useSendMsg(dispatch,sendMsg.current.value, selectedFriend._id);
+      sendMsg.current.value = ''; // Clear input after sending message
+    }
   }
 
 
-  console.log(msgs)
+
+ 
+  if(!selectedFriend){
+    return
+  }
+
+
   return (
     <div className=' relative  sm:w-[80%]  flex flex-col p-6'>
 
@@ -26,12 +53,12 @@ export const Chats = () => {
           
 
           {msgs&&msgs.map((msg)=>(
-             <div className={`chat ${msg.senderId === me ? "chat-end" : "chat-start"}`}>
+             <div className={`chat ${msg.senderId ===me._id  ? "chat-end" : "chat-start"}`}>
             <div className="chat-image avatar">
               <div className="w-10 rounded-full">
                 <img
                   alt="Tailwind CSS chat bubble component"
-                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                  src={`${msg.senderId !==me._id  ? selectedFriend.profilePic : me.profilePic }`} />
               </div>
             </div>
             <div className="chat-bubble">{msg.message}</div>
@@ -44,12 +71,12 @@ export const Chats = () => {
         </div>
 
 
-    <div id="type-msg" className='mt-5 '>
+      <div id="type-msg" className='mt-5 '>
         <label className="input input-bordered flex items-center gap-2">
-        <input ref={sendMsg} type="text" className="grow" placeholder="Type your msg......" />
-        <Send onClick={handleSendMsg} />
+        <input ref={sendMsg} type="text" className="grow" placeholder="Type your msg......" onKeyDown={handleEnter} />
+        <Send onClick={handleSendMsg} className='cursor-pointer' />
         </label>
-    </div>
+      </div>
 
     </div>
   )
