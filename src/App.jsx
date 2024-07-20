@@ -88,7 +88,7 @@ function App() {
 
   useEffect(() => {
     if (me) {
-    const  socket = io("http://localhost:3000",{
+    const  socket = io("https://lets-chat-backend-7s3j.onrender.com",{
         query:{
           userId:me._id,
                 },

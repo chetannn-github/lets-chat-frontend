@@ -8,7 +8,7 @@ const useLogin = async(dispatch,userName, password) => {
   
   try{
 
-    const res = await fetch("http://localhost:3000/api/auth/login",{
+    const res = await fetch("https://lets-chat-backend-7s3j.onrender.com/api/auth/login",{
           method:"POST",
           headers:{"Content-Type":"application/json"},
           body:JSON.stringify({userName,password}),

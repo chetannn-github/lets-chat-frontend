@@ -9,7 +9,7 @@ const useGetMsg = async(dispatch,recieverId) => {
   
   try{
   
-      const res = await fetch(`http://localhost:3000/api/message/${recieverId}`,{
+      const res = await fetch(`https://lets-chat-backend-7s3j.onrender.com/api/message/${recieverId}`,{
             method:"GET",
              credentials: 'include',
              headers: {

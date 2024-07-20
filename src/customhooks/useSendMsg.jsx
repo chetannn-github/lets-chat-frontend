@@ -6,7 +6,7 @@ const useSendMsg =async (dispatch ,message,recieverId) => {
   
     try{
   
-      const res = await fetch(`http://localhost:3000/api/message/send/${recieverId}`,{
+      const res = await fetch(`https://lets-chat-backend-7s3j.onrender.com/api/message/send/${recieverId}`,{
             method:"POST",
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify({message}),

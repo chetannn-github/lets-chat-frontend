@@ -16,7 +16,7 @@ const useAllUsers = () => {
   },[]);
 
   let fetchUsers = async() =>{
-    const response = await fetch("http://localhost:3000/api/users", {
+    const response = await fetch("https://lets-chat-backend-7s3j.onrender.com/api/users", {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
