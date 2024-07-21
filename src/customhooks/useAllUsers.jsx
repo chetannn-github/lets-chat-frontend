@@ -18,7 +18,7 @@ const useAllUsers = () => {
   let fetchUsers = async() =>{
     const response = await fetch("https://lets-chat-backend-7s3j.onrender.com/api/users", {
         method: 'GET',
-        mode: 'no-cors',
+        
         headers: {
           'Content-Type': 'application/json',
         },
