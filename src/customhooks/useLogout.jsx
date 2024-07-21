@@ -11,7 +11,7 @@ try{
     const res = await fetch("https://lets-chat-backend-7s3j.onrender.com/api/auth/logout",{
           method:"POST",
           headers:{"Content-Type":"application/json"},
-          
+          mode: 'no-cors',
           credentials: 'include',
     });
 

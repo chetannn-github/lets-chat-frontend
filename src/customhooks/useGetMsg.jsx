@@ -11,6 +11,7 @@ const useGetMsg = async(dispatch,recieverId) => {
   
       const res = await fetch(`https://lets-chat-backend-7s3j.onrender.com/api/message/${recieverId}`,{
             method:"GET",
+            mode: 'no-cors',
              credentials: 'include',
              headers: {
               'Content-Type': 'application/json',
