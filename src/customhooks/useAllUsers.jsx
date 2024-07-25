@@ -23,6 +23,7 @@ const useAllUsers = () => {
           'Content-Type': 'application/json',
         },
         credentials: 'include', // Include credentials if your server requires it
+        mode:'cors'
       });
     let json = await response.json();
     console.log(json);
