@@ -107,8 +107,8 @@ function App() {
   }, [dispatch, me]);
 
   useEffect(()=>{
-    socket?.on("newmsg", (msg)=>{
-      dispatch(pushMsg(newmsg))
+    socket?.on("newmsg", (message)=>{
+      dispatch(pushMsg(message))
     })
   })
 
