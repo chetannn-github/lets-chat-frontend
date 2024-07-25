@@ -9,7 +9,7 @@ import io from 'socket.io-client';
 
 export const Chats = () => {
   
-
+  const conversationRef = useRef(null);
 
   let dispatch = useDispatch();
   let msgs = useSelector((store)=>(store.msg.msgs));
@@ -34,12 +34,19 @@ export const Chats = () => {
     }
   }
 
-
+ useEffect(() => {
+    if (conversationRef.current) {
+      const conversationDiv = conversationRef.current;
+      conversationDiv.scrollTop = conversationDiv.scrollHeight;
+    }
+  }, [msgs]);
 
  
   if(!selectedFriend){
     return
   }
+
+ 
 
 
   return (
@@ -49,7 +56,7 @@ export const Chats = () => {
             <h3>To : {selectedFriend?.fullName}</h3>
         </div>
 
-        <div id="conversation" className=' flex flex-col gap-3  w-[100%] h-5/6 relative overflow-y-scroll  no-scrollbar scroll-m-4'>
+        <div id="conversation" ref={conversationRef} className=' flex flex-col gap-3  w-[100%] h-5/6 relative overflow-y-scroll  no-scrollbar scroll-m-4'>
           
 
           {msgs&&msgs.map((msg)=>(
