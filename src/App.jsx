@@ -108,6 +108,7 @@ function App() {
 
   useEffect(()=>{
     socket?.on("newmsg", (message)=>{
+      console.log(message);
       dispatch(pushMsg(message))
     })
   })
