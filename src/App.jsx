@@ -60,15 +60,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -84,47 +75,42 @@ import { pushMsg } from './redux/msgSlice';
 function App() {
   const dispatch = useDispatch();
   const me = useSelector((store) => store.user.loggedInUser);
-  // let [socket,setSocket]= useState(null);
+  let [socket,setSocket]= useState(null);
 
-  // useEffect(() => {
-  //   if (me) {
-  //   const  socket = io("http://localhost:3000",{
-  //       query:{
-  //         userId:me._id,
-  //               },
-  //     }); 
-  //     setSocket(socket)
+  useEffect(() => {
+    if (me) {
+    const  socket = io("https://lets-chat-backend-7s3j.onrender.com",{
+        query:{
+          userId:me._id,
+                },
+      }); 
+      setSocket(socket)
  
-  //     socket.on("getOnlineUsers",(users)=>{
-  //       console.log(users)
-  //     dispatch(addOnlineUser(users));
-  //   })
-  //     return () => socket.close();
-  //   } else {
-  //     if (socket) socket.close();
-  //   }
-
-   
+      socket.on("getOnlineUsers",(users)=>{
+        console.log(users)
+      dispatch(addOnlineUser(users));
+    })
+      return () => socket.close();
+    } else {
+      if (socket) socket.close();
+    }
 
 
+  }, [me]);
 
+  useEffect(() => {
+    let loggedInUser = localStorage.getItem('loggedInUser');
+    if (loggedInUser && !me) {
+      loggedInUser = JSON.parse(loggedInUser);
+      dispatch(addLoggedInUser(loggedInUser));
+    }
+  }, [dispatch, me]);
 
-
-  // }, [me]);
-
-  // useEffect(() => {
-  //   let loggedInUser = localStorage.getItem('loggedInUser');
-  //   if (loggedInUser && !me) {
-  //     loggedInUser = JSON.parse(loggedInUser);
-  //     dispatch(addLoggedInUser(loggedInUser));
-  //   }
-  // }, [dispatch, me]);
-
-  // useEffect(()=>{
-  //   socket?.on("newmsg", (msg)=>{
-  //     dispatch(pushMsg(newmsg))
-  //   })
-  // })
+  useEffect(()=>{
+    socket?.on("newmsg", (msg)=>{
+      dispatch(pushMsg(newmsg))
+    })
+  })
 
   return (
     <>
